@@ -13,7 +13,7 @@ def main():
     st.markdown('テキスト差分表示アプリ')
 
     with st.form(key='content'):
-        col_from, col_to = st.columns(2)
+        col_from, col_to = st.columns(spec=2)
 
         def text_area(label: str, key: str):
             initial_height = 300
@@ -43,13 +43,11 @@ def main():
         )
         is_context = st.toggle(label='変更点前後のみ表示')
 
-        st.form_submit_button(
-            label='差分を表示'
-        )
+        st.form_submit_button(label='差分を表示')
 
     if st.session_state['content_from'] or st.session_state['content_to']:
         with st.container(border=True):
-            st.write(':sparkles: テキスト差分')
+            st.markdown(':sparkles: テキスト差分')
 
             diff = HtmlDiff(wrapcolumn=wrapcolumn)
             diff._styles += 'td {background-color: white; color: black;}' # type: ignore
@@ -60,7 +58,7 @@ def main():
                 context=is_context
             )
 
-            st.html(body=html_diff)
+            st.html(html_diff)
 
     st.markdown("""
     * ブラウザ更新でリセットできます
